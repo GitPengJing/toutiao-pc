@@ -44,12 +44,26 @@ export default {
         code: '', // 验证码
         checkbox: false // 用户协议
       },
-      loginRules: {
+      rules: {
         // required 为true则该项为必选项
         // message提示信息
-        mobile: [],
-        code: [],
-        checkbox: []
+        mobile: [
+          { required: true, message: '手机号不能为空' },
+          // 正则表达式检验手机号格式
+          { pattern: /^1[3-9]\d{9}$/, message: '手机号格式不正确' }
+        ],
+        code: [
+          { required: true, message: '验证码不能为空' },
+          { pattern: /^\d{6}$/, message: '验证码格式不正确' }
+        ],
+        checkbox: [
+          { // 自定义检验函数
+            validator: function (rule, value, callback) {
+              // 输入值进行校验，不通过报提示信息
+              value ? callback() : callback(new Error('请勾选用户协议'))
+            }
+          }
+        ]
       }
     }
   }
@@ -67,7 +81,7 @@ export default {
     align-items: center;
     .box-card{
         width: 400px;
-        height: 300px;
+        height: 330px;
         // background: rgba(255, 1, 1, 0.561);
         // border: none;
         .title{
@@ -75,12 +89,6 @@ export default {
             img{
                 height: 40px;
             }
-        };
-        .el-form-item:nth-child(2){
-            margin-bottom: 10px;
-        };
-        .el-form-item:nth-child(3){
-            margin-bottom: 10px;
         };
     }
 }
