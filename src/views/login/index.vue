@@ -9,7 +9,8 @@
           <!-- 表单 方便获取数据 -->
           <!-- moddl 绑定表单数据对象 -->
           <!-- rules 绑定数据校验规则 -->
-          <el-form :model="loginForm" :rules="rules" style="margin-top:20px">
+          <!-- ref属性获取dom对象 -->
+          <el-form ref="loginRules" :model="loginForm" :rules="rules" style="margin-top:20px">
               <!-- 表单容器 -->
               <!-- prop绑定定义规则的字段 -->
               <el-form-item prop="mobile">
@@ -28,7 +29,8 @@
               </el-form-item>
               <el-form-item>
                   <!-- 登录按钮 -->
-                  <el-button style="width:100%" type="primary">登录</el-button>
+                  <!-- 定义点击事件手动校验数据 -->
+                  <el-button style="width:100%" type="primary" @click="login">登录</el-button>
               </el-form-item>
           </el-form>
       </el-card>
@@ -65,6 +67,26 @@ export default {
           }
         ]
       }
+    }
+  },
+  methods: {
+    login () {
+      this.$refs.loginRules.validate().then(() => {
+        // 校验成功
+        this.$axios({
+          url: '/authorizations',
+          method: 'post',
+          data: this.loginForm
+        }).then(res => {
+          console.log(res)
+          // 登录成功 获取toke存到loalStorage
+          window.localStorage.setItem('user-token', res.data.data.token)
+          // 跳转到主页
+          this.$router.push('/')
+        }).catch(() => {
+          this.$message.error('手机号或验证码错误')
+        })
+      })
     }
   }
 }
