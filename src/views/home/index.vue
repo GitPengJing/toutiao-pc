@@ -2,8 +2,8 @@
 <!-- 布局容器 -->
 <el-container>
   <!-- 侧边导航 -->
-    <el-aside>
-        <h1>我是左边的</h1>
+    <el-aside style="width:220px">
+        <layout-aside></layout-aside>
     </el-aside>
   <!-- 右边主体 -->
     <el-container>
@@ -21,8 +21,9 @@
 </template>
 
 <script>
+import layoutAside from '@/components/home/layout-aside'
 export default {
-
+  components: { 'layout-aside': layoutAside }
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="login">
+  <div class="login" filter-color='orange'>
       <!-- 登录框 -->
       <el-card class="box-card">
           <!-- 头部标题 -->
@@ -94,9 +94,8 @@ export default {
 // lang属性定义编写规则 scoped只对当前生效css样式 否则默认是全局的
 <style lang="less" scoped>
 .login{
-    background: url(../../assets/img/login_bg.jpg);
+    background: url(../../assets/img/login_bg.jpg) no-repeat;
     background-size: cover;
-    background-position: center center;
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -104,14 +103,12 @@ export default {
     .box-card{
         width: 400px;
         height: 330px;
-        // background: rgba(255, 1, 1, 0.561);
-        // border: none;
         .title{
             text-align: center;
             img{
                 height: 40px;
             }
-        };
+        }
     }
 }
 </style>
