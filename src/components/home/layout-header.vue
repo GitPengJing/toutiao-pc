@@ -13,10 +13,10 @@
     <el-col :span="12" class="right">
         <!-- align 设置垂直对齐方式 justify设置水平对齐方式 -->
         <el-row type="flex" align="middle" justify="end">
-            <img src="../../assets/img/user_pic.jpg" alt="">
+            <img :src="userInfo.photo" alt="">
             <!-- 下拉菜单 -->
             <el-dropdown trigger="click" @command="clickMenu">
-                <span>佛系少女</span>
+                <span>{{userInfo.name}}</span>
                 <i class="el-icon-arrow-down"></i>
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item command="info">个人信息</el-dropdown-item>
@@ -52,7 +52,17 @@ export default {
     }
   },
   created () {
+    //   取token
+    const token = window.localStorage.getItem('user-token')
+    // 请求接口
+    this.$axios({
+      url: '/user/profile', // 请求地址
+      headers: { Authorization: `Bearer ${token}` } // 请求头
+    }).then(res => {
+      console.log(res)
 
+      this.userInfo = res.data.data
+    })
   }
 }
 </script>
