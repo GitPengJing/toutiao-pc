@@ -9,7 +9,7 @@
     <el-container>
       <!-- 头部 -->
         <el-header>
-            <h1>我是头部</h1>
+          <layout-header></layout-header>
         </el-header>
       <!-- 主体部分 -->
         <el-main>
@@ -22,11 +22,17 @@
 
 <script>
 import layoutAside from '@/components/home/layout-aside'
+import layoutHeader from '@/components/home/layout-header'
 export default {
-  components: { 'layout-aside': layoutAside }
+  components: {
+    'layout-aside': layoutAside,
+    'layout-header': layoutHeader
+  }
 }
 </script>
 
 <style>
-
+.el-main{
+  background-color: #f2f3f5;
+}
 </style>
