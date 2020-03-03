@@ -59,8 +59,7 @@ export default {
       url: '/user/profile', // 请求地址
       headers: { Authorization: `Bearer ${token}` } // 请求头
     }).then(res => {
-      console.log(res)
-
+      // 请求成功以后获取到的信息给userInfo
       this.userInfo = res.data.data
     })
   }
