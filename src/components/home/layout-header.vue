@@ -3,14 +3,16 @@
 <el-row align="middle" type='flex' class="layoutHeader">
     <!-- :span 分行列 -->
     <!-- 左列 -->
-    <el-col :span="12" class="left">
+    <el-col :span="13" class="left">
         <!-- 图标 -->
         <i class="el-icon-s-unfold"></i>
         <!-- 标题 -->
         <span>江苏传智播客教育科技股份有限公司</span>
     </el-col>
+    <el-col :span="13" class="center">
+    </el-col>
     <!-- 右列 -->
-    <el-col :span="12" class="right">
+    <el-col :span="13" class="right">
         <!-- align 设置垂直对齐方式 justify设置水平对齐方式 -->
         <el-row type="flex" align="middle" justify="end">
             <img :src="userInfo.photo" alt="">
@@ -74,6 +76,11 @@ export default {
             font-size: 20px;
             margin-right: 5px;
          }
+    }
+    .center{
+      background: url(../../assets/img/4am.png) no-repeat;
+      background-position: center center;
+      height: 60px;
     }
     .right{
         img{

@@ -1,11 +1,12 @@
 <template>
 <div class="layoutAside">
     <!-- logo -->
-    <div class="logo" style="background-color:#2e2f32">
+    <div class="logo">
         <img src="../../assets/img/logo_admin.png" alt="">
     </div>
     <!-- 导航  router开启路由模式 -->
-<el-menu text-color="#adafb5" background-color="#353b4e" router>
+<el-menu text-color="rgb(204, 0, 255)" background-color="rgba(0,0,0,.3)" router>
+    <!-- background-color="#353b4e" -->
     <!-- 首页 -->
     <!-- index 是elementUI注册路由的方式 和router-link的to类似 -->
     <el-menu-item index='/home'>
@@ -51,18 +52,21 @@ export default {
 
 <style lang="less" scoped>
 .layoutAside{
-    background-color:#323745;
     height: 100vh;
-    width: 220px;
+    width: 240px;
     .logo{
         text-align: center;
         padding: 10px 0;
+        background-color:rgba(58, 57, 51, 0.5);
         img{
             height: 30px;
         }
     }
     .el-menu{
         border-right: none;
+        i{
+            color: #ffe538;
+        }
     }
 }
 </style>
