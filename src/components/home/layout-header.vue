@@ -55,14 +55,14 @@ export default {
   },
   created () {
     //   取token
-    const token = window.localStorage.getItem('user-token')
+    // const token = window.localStorage.getItem('user-token')
     // 请求接口
     this.$axios({
-      url: '/user/profile', // 请求地址
-      headers: { Authorization: `Bearer ${token}` } // 请求头
+      url: '/user/profile' // 请求地址
+      // headers: { Authorization: `Bearer ${token}` } // 请求头
     }).then(res => {
       // 请求成功以后获取到的信息给userInfo
-      this.userInfo = res.data.data
+      this.userInfo = res.data
     })
   }
 }

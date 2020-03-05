@@ -80,7 +80,7 @@ export default {
         }).then(res => {
           console.log(res)
           // 登录成功 获取toke存到loalStorage
-          window.localStorage.setItem('user-token', res.data.data.token)
+          window.localStorage.setItem('user-token', res.data.token)
           // 跳转到主页
           this.$router.push('/')
         }).catch(() => {
