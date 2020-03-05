@@ -12,7 +12,7 @@
           <layout-header></layout-header>
         </el-header>
       <!-- 主体部分 -->
-        <el-main style="padding-bottom:0">
+        <el-main>
           <router-view></router-view>
         </el-main>
     </el-container>

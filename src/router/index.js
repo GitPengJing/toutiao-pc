@@ -18,6 +18,9 @@ const routes = [
     children: [{
       path: '',
       component: SecondRouter
+    }, {
+      path: 'comment',
+      component: () => import('@/views/comment') // 按需加载的方式
     }
     ]
   }, {
