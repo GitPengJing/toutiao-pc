@@ -20,6 +20,17 @@
               </template>
           </el-table-column>
       </el-table>
+      <!-- 放置分页组件 -->
+      <el-row style="height:60px" type="flex" align="middle" justify="center">
+      <el-pagination background
+      layout="prev, pager, next"
+      :total="page.total"
+      :current-page="page.currentPage"
+      :page-size="page.pageSize"
+      @current-change='changePage'
+      >
+      </el-pagination>
+      </el-row>
   </el-card>
 </template>
 
@@ -27,21 +38,38 @@
 export default {
   data () {
     return {
+      page: {
+        total: 0, // 总页数
+        currentPage: 1, // 当前页  默认第一页
+        pageSize: 10 // 每页显示多少条信息
+      },
       list: []
     }
   },
   methods: {
+    // 定义页面改变事件
+    changePage (newPage) {
+      // 将最新页码给currentPage
+      this.page.currentPage = newPage
+      // 获取点击页码的数据
+      this.getComment()
+    },
     //   获取数据
     getComment () {
       this.$axios({
         url: '/articles',
+        // query参数
         params: {
-          response_type: 'comment' // 传comment 返回用于评论管理的字段
+          response_type: 'comment', // 传comment 返回用于评论管理的字段
+          page: this.page.currentPage, // 获取对应页的数据
+          per_page: this.page.pageSize // 每页获取多少条
         },
         method: 'get'
       }).then(res => {
         // console.log(res)
         this.list = res.data.results
+        // 请求成功以后将总页数赋值给total
+        this.page.total = res.data.total_count
       })
     },
     // 显示评论状态方法
