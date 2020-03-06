@@ -15,7 +15,7 @@
                   <!-- 显示图片 -->
                   <img :src="item.url" alt="">
                   <!-- 删除和收藏 -->
-                  <el-row type="flex" align="middle" justify="space-around">
+                  <el-row class="act" type="flex" align="middle" justify="space-around">
                       <i class="el-icon-s-promotion"></i>
                       <i class="el-icon-delete-solid"></i>
                   </el-row>
@@ -32,6 +32,17 @@
             </div>
           </el-tab-pane>
       </el-tabs>
+         <!-- 分页组件 -->
+         <el-row style="height:60px" type="flex" align="middle" justify="center">
+             <el-pagination background layout="prev,pager,next"
+             :total="page.total"
+             :current-page="page.currentPage"
+             :page-size="page.pageSize"
+             @current-change="changePage"
+             >
+
+             </el-pagination>
+         </el-row>
   </el-card>
 </template>
 
@@ -39,6 +50,11 @@
 export default {
   data () {
     return {
+      page: {
+        total: 0, // 总页数 初始值0
+        currentPage: 1, // 当前点击的页数 初始值1
+        pageSize: 8 // 每页显示的个数
+      },
       activeName: 'all', // 激活页 默认第一个页
       list: [] // 接受素材数据
     }
@@ -47,8 +63,18 @@ export default {
     //   定义标签页改变事件
     changeTabs () {
       // 改变标签页,重新获取资源
-    //   根据collect的值来改变
-    // true时显示收藏资源 false显示全部资源
+      // 根据collect的值来改变
+      // true时显示收藏资源 false显示全部资源
+      // 标签页改变时页码跳回第一页
+      this.page.currentPage = 1
+      // 重新拉取数据
+      this.getMaterial()
+    },
+    //   定义页码改变事件
+    changePage (newPage) {
+      // 将点击的页码传给currentPage(当前页)
+      this.page.currentPage = newPage
+      //   获取数据
       this.getMaterial()
     },
     //   获取素材资源
@@ -60,13 +86,17 @@ export default {
         params: {
           // 点击收藏时activeName ==='collect' collect值为true
           // 点击全部时activeName ==='all'     collect值为false
-          collect: this.activeName === 'collect' // 是否是收藏的图片
+          collect: this.activeName === 'collect', // 是否是收藏的图片
+          page: this.page.currentPage, // 点击页对应的资源
+          per_page: this.page.pageSize // 每页显示数量
         },
         // body参数
         data: {}
       }).then(res => {
         //   请求成功把值给list
         this.list = res.data.results
+        // 请求回来后刷新total值
+        this.page.total = res.data.total_count
       })
     }
   },
@@ -90,7 +120,7 @@ export default {
             width: 160px;
             height: 160px;
         }
-        .el-row{
+        .act{
             position: absolute;
             bottom: 0;
             left: 0;
