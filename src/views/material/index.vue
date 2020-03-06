@@ -6,6 +6,13 @@
              素材管理
          </template>
       </bread-crumb>
+      <!-- 上传图片 -->
+      <el-row type="flex" justify="end">
+          <!-- action不传报错 http-request为自定义上传方法-->
+          <el-upload action="" :http-request="uploadImg">
+              <el-button type="primary">上传图片<i class="el-icon-upload el-icon--right"></i></el-button>
+          </el-upload>
+      </el-row>
       <!-- tabs标签页 v-model 绑定选中标签的name-->
       <el-tabs v-model="activeName" @tab-click='changeTabs'>
           <!-- 全部素材页 返回的全部内容放这里 -->
@@ -16,8 +23,8 @@
                   <img :src="item.url" alt="">
                   <!-- 删除和收藏 -->
                   <el-row class="act" type="flex" align="middle" justify="space-around">
-                      <i class="el-icon-s-promotion"></i>
-                      <i class="el-icon-delete-solid"></i>
+                      <i class="el-icon-s-promotion" ></i>
+                      <i class="el-icon-delete-solid" @click="delImg(item.id)"></i>
                   </el-row>
               </el-card>
             </div>
@@ -77,6 +84,23 @@ export default {
       //   获取数据
       this.getMaterial()
     },
+    // 定义上传图片方法
+    uploadImg (params) {
+    //  params.file就是自己选择的要上传的图片
+      const data = new FormData()
+      data.append('image', params.file)
+      this.$axios({
+        url: '/user/images', // 请求地址
+        method: 'post', // 请求方法
+        data
+      }).then(() => {
+        //   上传成功,重新拉去数据
+        this.getMaterial()
+      }).catch(() => {
+        //   上传失败,提示消息
+        this.$message.error('图片上传失败', '错误')
+      })
+    },
     //   获取素材资源
     getMaterial () {
       this.$axios({
@@ -98,6 +122,26 @@ export default {
         // 请求回来后刷新total值
         this.page.total = res.data.total_count
       })
+    },
+    // 删除图片
+    delImg (id) {
+      debugger
+      this.$confirm('是否要删除该素材', '提示').then(() => {
+        this.$axios({
+          url: `/user/images/${id}`,
+          method: 'delete'
+        }).then(() => {
+          this.$message.success('删除成功')
+          //   获取数据
+          this.getMaterial()
+        }).catch(() => {
+          this.$message.error('删除失败')
+        })
+      })
+    },
+    // 收藏图片
+    collectImg () {
+
     }
   },
   created () {
@@ -129,6 +173,7 @@ export default {
             background: #eee;
             i{
                 font-size: 20px;
+                cursor: pointer;
             }
         }
     }
