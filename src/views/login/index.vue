@@ -1,5 +1,5 @@
 <template>
-  <div class="login" filter-color='orange'>
+  <div class="login">
       <!-- 登录框 -->
       <el-card class="box-card">
           <!-- 头部标题 -->

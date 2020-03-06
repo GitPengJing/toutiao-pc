@@ -6,7 +6,7 @@
         <layout-aside></layout-aside>
     </el-aside>
   <!-- 右边主体 -->
-    <el-container>
+    <el-container class="mainBody">
       <!-- 头部 -->
         <el-header>
           <layout-header></layout-header>
@@ -33,5 +33,13 @@ export default {
   background: url(../../assets/img/aside_bg.jpg);
   background-size: cover;
   background-position: center center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
+.mainBody{
+  position: relative;
+  margin-left: 240px;
 }
 </style>
