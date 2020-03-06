@@ -1,9 +1,16 @@
 // 作为拦截器
 import axios from 'axios' // 引入axios
 import router from '@/router'
+import Bigint from 'json-bigint' // 引入第三方包处理大数字类型
 // 设置默认请求头地址
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'
-
+// 解决数据失真问题
+// 失真是因为axios自动调用自己的json.parse方法
+// 如果超过最大安全数字，就会失真
+// transformResponse 在数据到达then catch之前执行
+axios.defaults.transformResponse = [function (data) {
+  return data ? Bigint.parse(data) : {}
+}]
 // axios请求拦截器  请求到达后台之前
 // 第一个函数是成功时执行
 // 第二个函数失败是执行

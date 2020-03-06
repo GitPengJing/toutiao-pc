@@ -59,11 +59,11 @@ export default {
       this.$confirm(`您确定要${statusText}评论吗？`, '提示').then(() => {
         //   确定以后
         this.$axios({
-          url: '/status', // 请求地址
+          url: '/comments/status', // 请求地址
           method: 'put', // 请求方式
           // 请求query参数
           params: {
-            article_id: row.id
+            article_id: row.id.toString()
           },
           data: {
             allow_comment: !row.comment_status // 状态栏显示打开还是关闭
