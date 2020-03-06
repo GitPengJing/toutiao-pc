@@ -15,13 +15,17 @@ const routes = [
     name: 'Home',
     component: Home,
     // 二级路由组件
-    children: [{
-      path: '',
-      component: SecondRouter
-    }, {
-      path: 'comment',
-      component: () => import('@/views/comment') // 按需加载的方式
-    }
+    children: [
+      {
+        path: '',
+        component: SecondRouter
+      }, {
+        path: 'comment', // 评论列表
+        component: () => import('@/views/comment') // 按需加载的方式
+      }, {
+        path: 'material', // 素材管理
+        component: () => import('@/views/material')
+      }
     ]
   }, {
     path: '/login',

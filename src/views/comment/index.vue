@@ -1,12 +1,13 @@
 <template>
-  <el-card>
+<!-- v-loading 加遮罩层 加载效果-->
+  <el-card v-loading="loading" >
       <!-- slot='header'表示面包屑组件作为标题 -->
       <bread-crumb slot="header">
       <template slot="title">
           评论管理
       </template>
       </bread-crumb>
-      <el-table :data="list">
+      <el-table :data="list" max-height="380px">
           <!-- lable定义表格的列名 -->
           <el-table-column prop="title" label="标题" width="500"></el-table-column>
           <!-- el-table不显示布尔值 用formatter 格式化 -->
@@ -16,7 +17,7 @@
           <el-table-column label="操作" >
               <template slot-scope="obj">
               <el-button type="text">修改</el-button>
-              <el-button @click="commentStatus(obj.row)" type="text">{{obj.row.comment_status?'关闭':'打开'}}评论</el-button>
+              <el-button size="small" @click="commentStatus(obj.row)" type="text">{{obj.row.comment_status?'关闭':'打开'}}评论</el-button>
               </template>
           </el-table-column>
       </el-table>
@@ -38,6 +39,7 @@
 export default {
   data () {
     return {
+      loading: true, // 默认关闭遮罩层
       page: {
         total: 0, // 总页数
         currentPage: 1, // 当前页  默认第一页
@@ -56,6 +58,7 @@ export default {
     },
     //   获取数据
     getComment () {
+      this.loading = true // 请求之前打开遮罩层
       this.$axios({
         url: '/articles',
         // query参数
@@ -70,6 +73,8 @@ export default {
         this.list = res.data.results
         // 请求成功以后将总页数赋值给total
         this.page.total = res.data.total_count
+        // 请求结束后关闭遮罩层
+        this.loading = false
       })
     },
     // 显示评论状态方法
@@ -117,7 +122,5 @@ export default {
 </script>
 
 <style lang='less' scoped>
-    .el-button{
-        font-size: 12px;
-    }
+
 </style>
