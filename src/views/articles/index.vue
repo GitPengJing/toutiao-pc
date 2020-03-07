@@ -1,5 +1,5 @@
 <template>
-<el-card>
+<el-card class="articles">
     <!-- 面包屑组件 -->
     <bread-crumb slot="header">
      <template slot="title">内容管理</template>
@@ -11,7 +11,7 @@
             <!-- 放置单选按钮 -->
             <!-- label为该状态对应的值 -->
             <!-- 0-草稿，1-待审核，2-审核通过，3-审核失败，4-已删除 -->
-            <el-radio-group :v-model="formNumber.status">
+            <el-radio-group v-model="formNumber.status">
                 <el-radio :label="5">全部</el-radio>
                 <el-radio :label="0">草稿</el-radio>
                 <el-radio :label="1">待审核</el-radio>
@@ -36,6 +36,24 @@
             <el-date-picker type="daterange" v-model="formNumber.dateRange"></el-date-picker>
         </el-form-item>
     </el-form>
+    <!-- 文章主体 -->
+    <el-row class="total" type="flex" align="middle">
+        <span>共找到10000条符合条件的内容</span>
+    </el-row>
+    <div class="article_list" v-for="item in 40" :key="item">
+        <div class="left">
+            <img src="http://img4.imgtn.bdimg.com/it/u=3702646542,3323248730&fm=26&gp=0.jpg" alt="">
+            <div class="info">
+                <span>lfdffdfs</span>
+                <el-tag style="width:60px;text-align:center">已审核</el-tag>
+                <span class="date">2020-12-90</span>
+            </div>
+        </div>
+        <div class="right">
+            <span><i class="el-icon-edit"></i>编辑</span>
+            <span><i class="el-icon-delete"></i>删除</span>
+        </div>
+    </div>
 </el-card>
 </template>
 
@@ -72,6 +90,45 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang='less' scoped>
+.articles{
+    .total{
+        height: 50px;
+        margin-top: 30px;
+        border-bottom: 1px dashed #ccc;
+    }
+    .article_list{
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 0;
+        border-bottom: 1px solid #ccc;
+        .left{
+            display: flex;
+            img{
+                width: 160px;
+                height: 100px;
+            }
+            .info{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                margin-left: 10px;
+                .date{
+                    font-size: 12px;
+                    color: #666;
+                }
+            }
+        }
+        .right{
+            span{
+                font-size: 12px;
+                margin-right: 10px;
+                cursor: pointer;
+            }
+            span:hover{
+                color: rgb(195, 0, 255);
+            }
+        }
+    }
+}
 </style>
