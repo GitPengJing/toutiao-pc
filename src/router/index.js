@@ -25,6 +25,9 @@ const routes = [
       }, {
         path: 'material', // 素材管理
         component: () => import('@/views/material')
+      }, {
+        path: 'articles', // 内容管理
+        component: () => import('@/views/articles')
       }
     ]
   }, {

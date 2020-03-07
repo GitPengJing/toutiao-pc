@@ -3,9 +3,7 @@
   <el-card v-loading="loading" >
       <!-- slot='header'表示面包屑组件作为标题 -->
       <bread-crumb slot="header">
-      <template slot="title">
-          评论管理
-      </template>
+      <template slot="title">评论管理</template>
       </bread-crumb>
       <el-table :data="list" max-height="380px">
           <!-- lable定义表格的列名 -->
