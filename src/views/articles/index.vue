@@ -40,13 +40,17 @@
     <el-row class="total" type="flex" align="middle">
         <span>共找到10000条符合条件的内容</span>
     </el-row>
-    <div class="article_list" v-for="item in 40" :key="item">
+    <!-- 循环生成每一个文章内容 toString(): 返回表示 Integer 值的 String 对象。-->
+    <div class="article_list" v-for="item in list" :key="item.id.toString()">
         <div class="left">
-            <img src="http://img4.imgtn.bdimg.com/it/u=3702646542,3323248730&fm=26&gp=0.jpg" alt="">
+            <img :src="item.cover.images.length ? item.cover.images[0] : defaultImg" alt="">
             <div class="info">
-                <span>lfdffdfs</span>
-                <el-tag style="width:60px;text-align:center">已审核</el-tag>
-                <span class="date">2020-12-90</span>
+                <span>{{item.title}}</span>
+                <el-tag style="width:60px;text-align:center"
+                :type="item.status|filterType">
+                {{item.status|filterStatus}}
+                </el-tag>
+                <span class="date">{{item.pubdate}}</span>
             </div>
         </div>
         <div class="right">
@@ -71,21 +75,63 @@ export default {
         // 日期范围
         dateRange: []
       },
-      channels: [] // 用来装频道获取的数据
+      channels: [], // 用来装频道获取的数据
+      list: [], // 装文章数据
+      defaultImg: require('../../assets/img/defaultImg.jpeg') // 放置没传图片的文章的默认封面
+    }
+  },
+  filters: {
+    //   通过过滤器显示不同状态
+    filterStatus (value) {
+      switch (value) {
+        //   0-草稿，1-待审核，2-审核通过，3-审核失败
+        case 0:
+          return '草稿'
+        case 1:
+          return '待审核'
+        case 2:
+          return '已审核'
+        case 3:
+          return '审核失败'
+      }
+    },
+    // 根据状态显示不同类型
+    filterType (value) {
+      switch (value) {
+        case 0:
+          return 'warning'
+        case 1:
+          return 'info'
+        case 2:
+          return ''
+        case 3:
+          return 'danger'
+      }
     }
   },
   methods: {
     //   获取频道
     getChannels () {
       this.$axios({
-        url: '/channels' // 请求地址
+        url: '/channels', // 请求地址
+        method: 'get' // 请求方式 不写默认get
       }).then(res => {
         this.channels = res.data.channels
+      })
+    },
+    // 获取文章数据
+    getArticles () {
+      this.$axios({
+        url: '/articles',
+        method: 'get'
+      }).then(res => {
+        this.list = res.data.results
       })
     }
   },
   created () {
     this.getChannels()
+    this.getArticles()
   }
 }
 </script>
