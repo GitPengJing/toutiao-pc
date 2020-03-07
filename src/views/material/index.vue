@@ -23,7 +23,7 @@
                   <img :src="item.url" alt="">
                   <!-- 删除和收藏 -->
                   <el-row class="act" type="flex" align="middle" justify="space-around">
-                      <i class="el-icon-s-promotion" ></i>
+                      <i class="el-icon-s-promotion" :style="{color: item.is_collected ? 'rgb(141, 1, 255)': 'black'}" @click="collectImg(item)"></i>
                       <i class="el-icon-delete-solid" @click="delImg(item.id)"></i>
                   </el-row>
               </el-card>
@@ -140,8 +140,23 @@ export default {
       })
     },
     // 收藏图片
-    collectImg () {
-
+    collectImg (item) {
+      debugger
+      this.$axios({
+        url: `/user/images/${item.id}`,
+        method: 'put',
+        data: {
+          // 为true就收藏,false不收藏
+          collect: !item.is_collected
+        }
+      }).then(() => {
+        const mess = item.is_collected ? '取消' : ''
+        this.$message.success(`${mess}收藏成功`)
+        // 重新获取数据
+        this.getMaterial()
+      }).catch(() => {
+        this.$message.error('收藏失败')
+      })
     }
   },
   created () {
