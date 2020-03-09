@@ -11,14 +11,17 @@
         :rules="publishRules">
         <!-- 输入标题 -->
         <el-form-item label="标题:" prop="title">
-            <el-input v-model="publishForm.title" style="width:400px" placeholder="请输入标题"></el-input>
+            <el-input v-model="publishForm.title" style="width:300px" placeholder="请输入标题"></el-input>
         </el-form-item>
         <!-- 输入内容 -->
         <el-form-item label="内容:" prop="content">
-            <el-input v-model="publishForm.content" type="textarea" rows="4" style="width:500px" placeholder="请输入内容"></el-input>
+            <quill-editor v-model="publishForm.content"
+            style="height:500px"
+            placeholder="请输入内容">
+            </quill-editor>
         </el-form-item>
         <!-- 选择封面 -->
-        <el-form-item label="封面:" prop="cover">
+        <el-form-item label="封面:" prop="cover" style="margin-top:120px">
             <el-radio-group v-model="publishForm.cover.type">
                 <el-radio :label="1">单图</el-radio>
                 <el-radio :label="3">三图</el-radio>
