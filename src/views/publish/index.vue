@@ -76,6 +76,14 @@ export default {
     }
   },
   methods: {
+    //   获取对应文章数据
+    getArticleById (id) {
+      this.$axios({
+        url: `/articles/${id}`
+      }).then(res => {
+        this.publishForm = res.data
+      })
+    },
     //   获取频道数据
     getChannel () {
       this.$axios({
@@ -87,23 +95,26 @@ export default {
     //  手动校验/发布文章/存入草稿
     publish (draft) {
       this.$refs.proofForm.validate().then(() => {
+        const { articleID } = this.$route.params
         //  发布文章
         this.$axios({
-          url: '/articles', // 请求地址
-          method: 'post', // 请求方法
+          url: articleID ? `/articles/${articleID}` : '/articles', // 请求地址 如果有id请求地址带id
+          method: articleID ? 'put' : 'post', // 请求方法 如果有id方法就是put
           params: { draft }, // query参数 draft为true存草稿  false发表
           data: this.publishForm
         }).then(() => {
-          this.$message.success(draft ? '存入草稿成功' : '发表成功')
+          this.$message.success(draft ? '存入草稿成功' : '操作成功')
           this.$router.push('/home/articles')
         }).catch(() => {
-          this.$message.error('发表失败')
+          this.$message.error('操作失败')
         })
       })
     }
   },
   created () {
     this.getChannel()
+    const { articleID } = this.$route.params
+    articleID && this.getArticleById(articleID)
   }
 }
 </script>

@@ -29,7 +29,7 @@ const routes = [
         path: 'articles', // 内容管理
         component: () => import('@/views/articles')
       }, {
-        path: 'publish', // 发表文章
+        path: 'publish/:articleID?', // 发表文章
         component: () => import('@/views/publish')
       }
     ]

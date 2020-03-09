@@ -54,7 +54,7 @@
             </div>
         </div>
         <div class="right">
-            <span><i class="el-icon-edit"></i>编辑</span>
+            <span @click="$router.push(`/home/publish/${item.id.toString()}`)"><i class="el-icon-edit"></i>编辑</span>
             <span @click="delArticles(item.id.toString())"><i class="el-icon-delete"></i>删除</span>
         </div>
     </div>
