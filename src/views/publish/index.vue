@@ -37,8 +37,8 @@
             </el-select>
         </el-form-item>
         <el-form-item>
-            <el-button type="primary" @click="checkForm">发布</el-button>
-            <el-button type="warning">存入草稿</el-button>
+            <el-button type="primary" @click="publish(false)">发布</el-button>
+            <el-button type="warning" @click="publish(true)">存入草稿</el-button>
         </el-form-item>
     </el-form>
 </el-card>
@@ -84,9 +84,22 @@ export default {
         this.channel = res.data.channels
       })
     },
-    // 手动校验
-    checkForm () {
-      this.$refs.proofForm.validate()
+    //  手动校验/发布文章/存入草稿
+    publish (draft) {
+      this.$refs.proofForm.validate().then(() => {
+        //  发布文章
+        this.$axios({
+          url: '/articles', // 请求地址
+          method: 'post', // 请求方法
+          params: { draft }, // query参数 draft为true存草稿  false发表
+          data: this.publishForm
+        }).then(() => {
+          this.$message.success(draft ? '存入草稿成功' : '发表成功')
+          this.$router.push('/home/articles')
+        }).catch(() => {
+          this.$message.error('发表失败')
+        })
+      })
     }
   },
   created () {
