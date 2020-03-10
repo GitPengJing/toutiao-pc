@@ -80,6 +80,28 @@ export default {
       }
     }
   },
+  watch: {
+    // 监听路由组件的params参数是否变化
+    $route: function (to, from) {
+      // 如果有id则表示是编辑文章
+      // 获取该id对应的所有数据
+      if (to.params.articleID) {
+        this.getArticleById(to.params.articleID)
+      } else {
+        // 没有id,所有数据清空
+        this.publishForm = {
+          title: '', // 文章标题
+          content: '', // 文章内容
+          // 封面
+          cover: {
+            type: 0, // 封面类型 -1:自动，0-无图，1-1张，3-3张
+            images: [] // 根据类型不同数量图片
+          },
+          channel_id: null // 频道id
+        }
+      }
+    }
+  },
   methods: {
     // 接收图片地址并显示
     receiveUrl (url, index) {
@@ -138,6 +160,7 @@ export default {
     articleID && this.getArticleById(articleID)
   }
 }
+
 </script>
 
 <style>
