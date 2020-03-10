@@ -1,5 +1,5 @@
 <template>
-<el-card class="articles">
+<el-card class="articles" v-loading="loading">
     <!-- 面包屑组件 -->
     <bread-crumb slot="header">
      <template slot="title">内容管理</template>
@@ -33,12 +33,12 @@
         <!-- 时间范围 -->
         <el-form-item label="时间范围:">
             <!-- 时间范围插件 -->
-            <el-date-picker type="daterange" v-model="formNumber.dateRange"></el-date-picker>
+            <el-date-picker value-format="yyyy-MM-dd" type="daterange" v-model="formNumber.dateRange"></el-date-picker>
         </el-form-item>
     </el-form>
     <!-- 文章主体 -->
     <el-row class="total" type="flex" align="middle">
-        <span>共找到10000条符合条件的内容</span>
+        <span>共找到{{page.total}}条符合条件的内容</span>
     </el-row>
     <!-- 循环生成每一个文章内容 toString(): 返回表示 Integer 值的 String 对象。-->
     <div class="article_list" v-for="item in list" :key="item.id.toString()">
@@ -75,6 +75,7 @@
 export default {
   data () {
     return {
+      loading: false,
       // 分页数据
       page: {
         total: 0, // 总页
@@ -191,6 +192,7 @@ export default {
     },
     // 获取文章数据
     getArticles (params) {
+      this.loading = true
       this.$axios({
         url: '/articles',
         params // 请求参数
@@ -198,6 +200,7 @@ export default {
         this.list = res.data.results
         // 请求回来返回文章总数
         this.page.total = res.data.total_count
+        this.loading = false
       })
     }
   },

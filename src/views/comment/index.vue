@@ -37,7 +37,7 @@
 export default {
   data () {
     return {
-      loading: true, // 默认关闭遮罩层
+      loading: false, // 默认关闭遮罩层
       page: {
         total: 0, // 总页数
         currentPage: 1, // 当前页  默认第一页

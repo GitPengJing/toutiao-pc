@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <el-card v-loading="loading">
     <!-- 面包屑组件作为el-card的头 -->
     <bread-crumb slot="header">
        <template slot="title">
@@ -68,6 +68,7 @@
 export default {
   data () {
     return {
+      loading: false,
       dialogVisible: false, // dialog预览框显示或隐藏
       // clickIndex: -1,
       page: {
@@ -125,6 +126,7 @@ export default {
     },
     //   获取素材资源
     getMaterial () {
+      this.loading = true
       this.$axios({
         url: '/user/images', // 请求地址
         method: 'get', // 请求方式 默认是get
@@ -143,11 +145,11 @@ export default {
         this.list = res.data.results
         // 请求回来后刷新total值
         this.page.total = res.data.total_count
+        this.loading = false
       })
     },
     // 删除图片
     delImg (id) {
-      debugger
       this.$confirm('是否要删除该素材', '提示').then(() => {
         this.$axios({
           url: `/user/images/${id}`,
@@ -163,7 +165,6 @@ export default {
     },
     // 收藏图片
     collectImg (item) {
-      debugger
       this.$axios({
         url: `/user/images/${item.id}`,
         method: 'put',
