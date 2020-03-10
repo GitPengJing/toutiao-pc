@@ -7,6 +7,10 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '*', // 没有组件的路由
+    component: () => import('@/views/404')
+  },
+  {
     path: '/',
     redirect: '/home' // 强制跳转到home页
   },
@@ -32,7 +36,7 @@ const routes = [
         path: 'publish/:articleID?', // 发表文章
         component: () => import('@/views/publish')
       }, {
-        path: 'account', // 发表文章
+        path: 'account', // 账户信息
         component: () => import('@/views/account')
       }
     ]
