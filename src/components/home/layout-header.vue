@@ -5,7 +5,7 @@
     <!-- 左列 -->
     <el-col :span="13" class="left">
         <!-- 图标 -->
-        <i class="el-icon-s-unfold"></i>
+        <i @click="collapse=!collapse" :class="collapse?'el-icon-s-unfold':'el-icon-s-fold'"></i>
         <!-- 标题 -->
         <span>江苏传智播客教育科技股份有限公司</span>
     </el-col>
@@ -32,10 +32,17 @@
 </template>
 
 <script>
+import eventBus from '@/utils/eventBus'
 export default {
   data () {
     return {
-      userInfo: {} // 接收用户信息
+      userInfo: {}, // 接收用户信息
+      collapse: false // 默认不折叠
+    }
+  },
+  watch: {
+    collapse: function () {
+      eventBus.$emit('changeCollapse')
     }
   },
   methods: {
@@ -51,18 +58,24 @@ export default {
         //  回到登录
         this.$router.push('/login')
       }
+    },
+    getUserInfo () {
+      // 请求接口 获取用户信息
+      this.$axios({
+        url: '/user/profile' // 请求地址
+      // headers: { Authorization: `Bearer ${token}` } // 请求头
+      }).then(res => {
+      // 请求成功以后获取到的信息给userInfo
+        this.userInfo = res.data
+      })
     }
   },
   created () {
-    //   取token
-    // const token = window.localStorage.getItem('user-token')
-    // 请求接口
-    this.$axios({
-      url: '/user/profile' // 请求地址
-      // headers: { Authorization: `Bearer ${token}` } // 请求头
-    }).then(res => {
-      // 请求成功以后获取到的信息给userInfo
-      this.userInfo = res.data
+    this.getUserInfo()
+    // 监听值改变
+    eventBus.$on('updateInfo', () => {
+      // 值改变显示更新
+      this.getUserInfo()
     })
   }
 }

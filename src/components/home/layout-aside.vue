@@ -2,11 +2,10 @@
 <div class="layoutAside">
     <!-- logo -->
     <div class="logo">
-        <img src="../../assets/img/logo_admin.png" alt="">
+        <img :src="collapse ? lilImg : bigImg" alt="">
     </div>
     <!-- 导航  router开启路由模式 -->
-<el-menu text-color="rgb(204, 0, 255)" background-color="rgba(0,0,0,.3)" router>
-    <!-- background-color="#353b4e" -->
+<el-menu text-color="rgb(204, 0, 255)" :collapse="collapse" background-color="rgba(0,0,0,.3)" router >
     <!-- 首页 -->
     <!-- index 是elementUI注册路由的方式 和router-link的to类似 -->
     <el-menu-item index='/home'>
@@ -46,14 +45,19 @@
 
 <script>
 export default {
-
+  props: ['collapse'], // 接收父组件传的值
+  data () {
+    return {
+      bigImg: require('../../assets/img/logo_admin.png'),
+      lilImg: require('../../assets/img/lilImg2.png')
+    }
+  }
 }
 </script>
 
 <style lang="less" scoped>
 .layoutAside{
     height: 100vh;
-    width: 240px;
     .logo{
         text-align: center;
         padding: 10px 0;

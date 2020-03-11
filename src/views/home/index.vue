@@ -2,14 +2,15 @@
 <!-- 布局容器 -->
 <el-container>
   <!-- 侧边导航 -->
-    <el-aside style="width:240px;background-color:#323745;">
-        <layout-aside></layout-aside>
+    <el-aside :style="{width: collapse? '64px':'240px'}" style="transition:all 0.5s linear;background-color:#323745;">
+      <!-- 将父组件的值传给子组件 -->
+      <layout-aside :collapse='collapse'></layout-aside>
     </el-aside>
   <!-- 右边主体 -->
-    <el-container class="mainBody">
+    <el-container class="mainBody" style="transition:all 0.5s linear" :style="{marginLeft:collapse?'64px':'240px' }">
       <!-- 头部 -->
         <el-header>
-          <layout-header></layout-header>
+          <layout-header ></layout-header>
         </el-header>
       <!-- 主体部分 -->
         <el-main>
@@ -20,8 +21,19 @@
 </template>
 
 <script>
-
+import eventBus from '@/utils/eventBus'
 export default {
+  data () {
+    return {
+      collapse: false // 默认不折叠
+    }
+  },
+  created () {
+    // 监听值改变
+    eventBus.$on('changeCollapse', () => {
+      this.collapse = !this.collapse
+    })
+  }
 }
 </script>
 

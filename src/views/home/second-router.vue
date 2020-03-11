@@ -13,9 +13,9 @@ export default {
   data () {
     return {
       list: [
-        'http://img.pconline.com.cn/images/upload/upc/tx/wallpaper/1207/24/c0/12524707_1343120823221.jpg',
-        'http://img.zcool.cn/community/016bed56e3072832f875520fce0db0.jpg@1280w_1l_2o_100sh.jpg',
-        'http://attach.bbs.miui.com/forum/201408/07/213833xcc9tcimulmivuc4.jpg'
+        'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2478071779,844350194&fm=26&gp=0.jpg',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1583943054504&di=a231d601b6c7c23f630ec8c48ec12c75&imgtype=0&src=http%3A%2F%2Fww1.sinaimg.cn%2Flarge%2F5e11df3fgw1ed0vzdglu9j21hc0u0k3y.jpg',
+        'http://img.pconline.com.cn/images/upload/upc/tx/wallpaper/1207/24/c0/12524707_1343120823221.jpg'
       ]
     }
   }
@@ -25,5 +25,6 @@ export default {
 <style>
 .el-carousel__item img {
     width: 100%;
+    height: 100%;
   }
 </style>

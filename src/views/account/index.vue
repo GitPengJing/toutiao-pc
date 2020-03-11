@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import eventBus from '@/utils/eventBus'
 export default {
   data () {
     return {
@@ -75,6 +76,8 @@ export default {
           data: this.formData
         }).then(() => {
           this.$message.success('保存成功')
+          // 通知值改变了
+          eventBus.$emit('updateInfo')
         }).catch(() => {
           this.$message.error('保存成功')
         })
