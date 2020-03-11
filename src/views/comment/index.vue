@@ -64,8 +64,7 @@ export default {
           response_type: 'comment', // 传comment 返回用于评论管理的字段
           page: this.page.currentPage, // 获取对应页的数据
           per_page: this.page.pageSize // 每页获取多少条
-        },
-        method: 'get'
+        }
       }).then(res => {
         // console.log(res)
         this.list = res.data.results

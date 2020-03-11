@@ -60,40 +60,38 @@ export default {
   },
   methods: {
     //   获取用户资料
-    getInfo () {
-      this.$axios({
+    async getInfo () {
+      const res = await this.$axios({
         url: '/user/profile'
-      }).then(res => {
-        this.formData = res.data
       })
+      this.formData = res.data
     },
     // 保存用户信息
-    saveInfo () {
-      this.$refs.myForm.validate().then(() => {
-        this.$axios({
+    async saveInfo () {
+      await this.$refs.myForm.validate()
+      try {
+        await this.$axios({
           url: '/user/profile',
           method: 'patch',
           data: this.formData
-        }).then(() => {
-          this.$message.success('保存成功')
-          // 通知值改变了
-          eventBus.$emit('updateInfo')
-        }).catch(() => {
-          this.$message.error('保存成功')
         })
-      })
+        this.$message.success('保存成功')
+        // 通知值改变了
+        eventBus.$emit('updateInfo')
+      } catch (error) {
+        this.$message.error('保存成功')
+      }
     },
     // 上传头像
-    uploadImg (params) {
+    async uploadImg (params) {
       const data = new FormData()
       data.append('photo', params.file)
-      this.$axios({
+      const res = await this.$axios({
         url: '/user/photo',
         method: 'patch',
         data
-      }).then(res => {
-        this.formData.photo = res.data.photo
       })
+      this.formData.photo = res.data.photo
     }
   },
   created () {
